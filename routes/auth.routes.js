@@ -1,25 +1,20 @@
-/*
-Rutas de Autenticacion: host + /api/auth
-*/
-
 const { Router } = require('express');
 const router = Router();
 const { check } = require('express-validator');
 const {checkReq} = require('../middlewares/check-req');
 const {
-    createUser,
-    renewToken,
+    createUser, 
     loginUser
 } = require('../controllers/auth');
-const { checkJWT } = require('../middlewares/check-jwt');
+
+//Rutas de Autenticacion: host + /auth
 
 router.post(
-    "/new",
+    "/create",
     [
-        check('name', 'el nombre es obligatorio').not().isEmpty(),
+        check('nombre', 'el nombre es obligatorio').not().isEmpty(),
         check('email', 'el email es obligatorio').isEmail(),
-        check('password', 'el password es obligatorio').isLength({ min: 6 }),
-        check('role', 'el rol es obligatorio').not().isEmpty(),
+        check('password', 'el password es obligatorio').isLength({ min: 3}),     
         checkReq
     ],
     createUser
@@ -29,14 +24,10 @@ router.post(
     "/login",
     [
         check('email', 'el email es obligatorio').isEmail(),
-        check('password', 'el password es obligatorio').isLength({ min: 6 }),
+        check('password', 'el password es obligatorio').isLength({ min: 3 }),
         checkReq
     ], 
     loginUser   
 );
-
-router.get("/renew", checkJWT, renewToken);
-
-
 
 module.exports = router;

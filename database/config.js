@@ -1,15 +1,8 @@
-const mongoose = require('mongoose');
+const { Sequelize } = require('sequelize');
 
-const dbConnection = async()=>{
-    try {
-       await mongoose.connect(process.env.DB_CNN);
-       console.log('db Online ')
-    } catch (error) {
-        console.log(error)
-        throw new Error('Error al inicializar la base de datos');
-    }
-};
+const sequelize = new Sequelize('alkemydb', 'postgres', 'password', {
+  host: 'localhost',
+  dialect: 'postgres'
+});
 
-module.exports = {
-    dbConnection
-}
+module.exports = { sequelize };
