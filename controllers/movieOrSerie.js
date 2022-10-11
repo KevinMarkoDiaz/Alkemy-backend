@@ -1,11 +1,14 @@
 const { response } = require('express');
-const { MovieOrSeries } = require('../models/MovieOrSeries');
+const { Character } = require('../models/Character');
+const { MovieOrSerie } = require('../models/MovieOrSeries');
 
 const getMovieOrSeries = async (req, res = response) => {
 
     try {
-        const movieOrSeries = await MovieOrSeries.findAll()
-        console.log(first)
+        const movieOrSeries = await MovieOrSerie.findAll({
+            include:Character
+        })
+       
         res.status(200).json({
             ok: true,
             movieOrSeries
@@ -19,18 +22,21 @@ const getMovieOrSeries = async (req, res = response) => {
 };
 const createMovieOrSerie = async (req, res = response) => {
     try {
-        const { titulo, imagen, fecha_de_creacion, calificacion } = req.body;
-        const newmovieOrSerie = await MovieOrSeries.create({
+        const { titulo, imagen, fecha_de_creacion, calificacion, personajeId } = req.body;
+    
+        const newmovieOrSerie = await MovieOrSerie.create({
             titulo, 
             imagen, 
             fecha_de_creacion, 
-            calificacion 
+            calificacion,
+            personajeId            
         });
         res.status(401).json({
             ok: true,
             newmovieOrSerie
         });
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             ok: false,
             msg: error
@@ -38,12 +44,16 @@ const createMovieOrSerie = async (req, res = response) => {
     }
 };
 const getMovieOrSerie = async (req, res = response) => {
-    const { id } = req.params
+    const  nid  = req.params.id
+    const id = parseInt(nid)
     try {
-        const movieOrSerie = await MovieOrSeries.findOne({
+        const movieOrSerie = await MovieOrSerie.findOne({
             where: { id },
-
+            include:Character
         })
+        console.log(movieOrSerie)
+ 
+       
         res.status(200).json({
             ok: true,
             movieOrSerie
@@ -58,7 +68,7 @@ const getMovieOrSerie = async (req, res = response) => {
 const deleteMovieOrSerie = async (req, res = response) => {
     const { id } = req.params
     try {
-        await MovieOrSeries.destroy({
+        await MovieOrSerie.destroy({
             where: { id }
         });
         return res.status(204).json({ ok: true })
@@ -80,7 +90,7 @@ const updateMovieOrSerie = async (req, res = response) => {
     } = req.body;
 
     try {
-        const movieOrSeries = await MovieOrSeries.findByPk(id);
+        const movieOrSeries = await MovieOrSerie.findByPk(id);
         movieOrSeries.titulo = titulo
         movieOrSeries.imagen = imagen
         movieOrSeries.fecha_de_creacion = fecha_de_creacion

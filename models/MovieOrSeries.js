@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database/config');
-const { Character } = require('./Character');
-const MovieOrSeries = sequelize.define('peliculas o series', {
+const MovieOrSerie = sequelize.define('pelicula', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -9,6 +8,7 @@ const MovieOrSeries = sequelize.define('peliculas o series', {
   },
   titulo: {
     type: DataTypes.STRING,
+    unique: true 
   },
   imagen: {
     type: DataTypes.STRING
@@ -19,16 +19,8 @@ const MovieOrSeries = sequelize.define('peliculas o series', {
   calificacion: {
     type: DataTypes.INTEGER
   },
-});
+  
+}, { timestamps: false })
 
-MovieOrSeries.hasMany(Character, {
-  foreignKey: 'movieOrSerieId',
-  sourceKey: 'id'
-});
 
-Character.belongsTo(MovieOrSeries, {
-  foreignKey: 'movieOrSerieId',
-  targetId: 'id'
-});
-
-module.exports = { MovieOrSeries };
+module.exports = { MovieOrSerie };

@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database/config');
-const { MovieOrSeries } = require('./MovieOrSeries');
 const Genre = sequelize.define('generos', {
   id: {
     type: DataTypes.INTEGER,
@@ -9,6 +8,7 @@ const Genre = sequelize.define('generos', {
   },
   nombre: {
     type: DataTypes.STRING,
+    unique: true 
   },
   imagen: {
     type: DataTypes.STRING
@@ -16,16 +16,6 @@ const Genre = sequelize.define('generos', {
   peliculas_o_series: {
     type: DataTypes.STRING
   }
-});
-
-Genre.hasMany(MovieOrSeries, {
-  foreignKey: 'genreId',
-  sourceKey: 'id'
-});
-
-MovieOrSeries.belongsTo(Genre, {
-  foreignKey: 'genreId',
-  targetId: 'id'
-});
+}, { timestamps: false });
 
 module.exports = { Genre };

@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database/config');
-const { MovieOrSeries } = require('./MovieOrSeries');
 
-const Character = sequelize.define('personajes', {
+const Character = sequelize.define('personaje', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -13,6 +12,7 @@ const Character = sequelize.define('personajes', {
   },
   nombre: {
     type: DataTypes.STRING,
+ 
   },
   edad: {
     type: DataTypes.INTEGER
@@ -22,7 +22,9 @@ const Character = sequelize.define('personajes', {
   },
   historia: {
     type: DataTypes.STRING
-  }
-});
+  },
+ 
+}, { timestamps: false });
+
 
 module.exports = { Character };
