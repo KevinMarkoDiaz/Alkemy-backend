@@ -12,18 +12,17 @@ const getCharacters = async (req, res = response) => {
             ? await Character.findAll({
 
                 where: {
-                    [Op.or]: {
+                    [Op.and]: {
                         nombre: name,
-                        [Op.or]: [{ peso: weight }, { edad: age }, { edad: age }]
+                        [Op.or]: [{ peso: weight }, { edad: age }, {nombre: name}]
                     }
                 }
             })
             : await Character.findAll()
-
-        // const characters = data.map(character => ({nombre:character.nombre, imagen:character.imagen }))  
+        const characters = data.map(character => ({nombre:character.nombre, imagen:character.imagen }))  
         res.status(200).json({
             ok: true,
-            data
+            characters
         })
     } catch (error) {
         console.log(error)

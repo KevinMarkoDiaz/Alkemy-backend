@@ -32,6 +32,8 @@ app.use("/auth", require("./routes/auth.routes"));
 app.use("/characters", require("./routes/character.routes"));
 //Movie or series
 app.use("/movie-or-series", require("./routes/movieOrSeries.routes"));
+//Genre
+app.use("/genre", require("./routes/genre.routes"));
 
 //Escuchar peticiones
 app.listen(process.env.PORT, ()=>{

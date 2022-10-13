@@ -7,8 +7,7 @@ const MovieOrSerie = sequelize.define('pelicula', {
     autoIncrement: true
   },
   titulo: {
-    type: DataTypes.STRING,
-    unique: true 
+    type: DataTypes.STRING,   
   },
   imagen: {
     type: DataTypes.STRING

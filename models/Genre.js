@@ -12,9 +12,6 @@ const Genre = sequelize.define('generos', {
   },
   imagen: {
     type: DataTypes.STRING
-  },
-  peliculas_o_series: {
-    type: DataTypes.STRING
   }
 }, { timestamps: false });
 

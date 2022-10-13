@@ -13,5 +13,5 @@ Character.belongsToMany(MovieOrSerie, {
     foreignKey: "PP_IDpersonaje",
   });
 
-Genre.hasMany(MovieOrSerie, { as: "pelicula_o_serie", foreignKey: 'genre_id' });
-MovieOrSerie.belongsTo(Genre, { as: 'nombre' });
+Genre.hasMany(MovieOrSerie, {foreignKey: 'genre_id', targetId: 'id'} );
+MovieOrSerie.belongsTo(Genre, {foreignKey: 'genre_id', targetId: 'id'});
